@@ -1,0 +1,20 @@
+# Build products
+build/
+DerivedData/
+*.xcarchive
+*.ipa
+*.dSYM.zip
+
+# Xcode user state
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+
+# App Store Connect API keys. Never commit these.
+*.p8
+AuthKey_*
+
+# Local release metadata and notes
+AppStore/
+
+.DS_Store
