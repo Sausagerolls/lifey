@@ -11,6 +11,15 @@ enum Theme {
     static let danger = Color(hex: 0xFF4D4D)
 
     static let panelCorner: CGFloat = 26
+
+    /// Type and controls are sized from the panel's short side, but the ceilings that keep
+    /// a phone panel sensible leave a tablet panel looking half empty. Panels wider than
+    /// this are given the roomier ceiling.
+    static let tabletPanelThreshold: CGFloat = 560
+
+    static func cap(_ shortSide: CGFloat, phone: CGFloat, tablet: CGFloat) -> CGFloat {
+        shortSide < tabletPanelThreshold ? phone : tablet
+    }
 }
 
 /// One of the selectable player accents. Stored by `id` so presets survive app updates.

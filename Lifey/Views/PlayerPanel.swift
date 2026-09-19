@@ -94,7 +94,7 @@ struct PlayerPanel: View {
                         .fill(accent.color)
                         .frame(width: 10, height: 10)
                     Text(player.name)
-                        .font(.tally(min(max(shortSide * 0.085, 13), 20), weight: .semibold))
+                        .font(.tally(min(max(shortSide * 0.085, 13), Theme.cap(shortSide, phone: 20, tablet: 34)), weight: .semibold))
                         .foregroundStyle(Theme.textPrimary)
                         .lineLimit(1)
                 }
@@ -105,7 +105,7 @@ struct PlayerPanel: View {
 
             if player.isEliminated {
                 Label("OUT", systemImage: "xmark.octagon.fill")
-                    .font(.tally(min(max(shortSide * 0.07, 11), 15), weight: .heavy))
+                    .font(.tally(min(max(shortSide * 0.07, 11), Theme.cap(shortSide, phone: 15, tablet: 26)), weight: .heavy))
                     .foregroundStyle(Theme.danger)
                     .labelStyle(.titleAndIcon)
             }
@@ -189,13 +189,13 @@ struct PlayerPanel: View {
             VStack(spacing: 0) {
                 if let caption {
                     Text(caption)
-                        .font(.tally(min(max(shortSide * 0.075, 11), 17), weight: .heavy))
+                        .font(.tally(min(max(shortSide * 0.075, 11), Theme.cap(shortSide, phone: 17, tablet: 30)), weight: .heavy))
                         .foregroundStyle(tint.opacity(0.9))
                         .tracking(2)
                 }
 
                 Text("\(value)")
-                    .font(.tally(min(max(shortSide * 0.46, 54), 190), weight: .heavy))
+                    .font(.tally(min(max(shortSide * 0.46, 54), Theme.cap(shortSide, phone: 190, tablet: 330)), weight: .heavy))
                     .foregroundStyle(warn ? Theme.danger : tint)
                     .monospacedDigit()
                     .minimumScaleFactor(0.4)
@@ -208,7 +208,7 @@ struct PlayerPanel: View {
 
             if delta != 0 {
                 Text(delta > 0 ? "+\(delta)" : "\(delta)")
-                    .font(.tally(min(max(shortSide * 0.1, 15), 26), weight: .bold))
+                    .font(.tally(min(max(shortSide * 0.1, 15), Theme.cap(shortSide, phone: 26, tablet: 42)), weight: .bold))
                     .foregroundStyle(delta > 0 ? Color(hex: 0x6EE7A8) : Theme.danger)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 3)
@@ -237,18 +237,19 @@ struct PlayerPanel: View {
     private func footer(shortSide: CGFloat, width: CGFloat) -> some View {
         let chips = chipSpecs
         // A compact chip needs roughly 70 points; anything past that scrolls instead.
-        let fitsInRow = CGFloat(chips.count) * 70 <= width
+        let chipUnit = Theme.cap(shortSide, phone: 70, tablet: 104)
+        let fitsInRow = CGFloat(chips.count) * chipUnit <= width
         return Group {
             if fitsInRow {
                 // Everything fits, so spread the chips across the full width.
                 // Spread the chips, but never so far apart that they stop reading as a row.
                 HStack(spacing: 6) {
                     ForEach(chips) { chip in
-                        chipView(chip, shortSide: shortSide, compact: CGFloat(chips.count) * 108 > width)
+                        chipView(chip, shortSide: shortSide, compact: CGFloat(chips.count) * (chipUnit * 1.55) > width)
                             .frame(maxWidth: .infinity)
                     }
                 }
-                .frame(maxWidth: min(width, CGFloat(chips.count) * 118))
+                .frame(maxWidth: min(width, CGFloat(chips.count) * (chipUnit * 1.7)))
                 .frame(maxWidth: .infinity)
             } else {
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -261,7 +262,7 @@ struct PlayerPanel: View {
                 }
             }
         }
-        .frame(height: min(max(shortSide * 0.17, 36), 52))
+        .frame(height: min(max(shortSide * 0.17, 36), Theme.cap(shortSide, phone: 52, tablet: 78)))
     }
 
     private struct ChipSpec: Identifiable {
@@ -382,13 +383,13 @@ private struct PanelChip: View {
         Button(action: action) {
             HStack(spacing: 5) {
                 Image(systemName: symbol)
-                    .font(.system(size: min(max(shortSide * 0.055, 11), 15), weight: .bold))
+                    .font(.system(size: min(max(shortSide * 0.055, 11), Theme.cap(shortSide, phone: 15, tablet: 24)), weight: .bold))
                 Text("\(value)")
-                    .font(.tally(min(max(shortSide * 0.075, 14), 19), weight: .heavy))
+                    .font(.tally(min(max(shortSide * 0.075, 14), Theme.cap(shortSide, phone: 19, tablet: 30)), weight: .heavy))
                     .monospacedDigit()
                 if showsTitle {
                     Text(title)
-                        .font(.tally(min(max(shortSide * 0.05, 9), 12), weight: .semibold))
+                        .font(.tally(min(max(shortSide * 0.05, 9), Theme.cap(shortSide, phone: 12, tablet: 20)), weight: .semibold))
                         .opacity(0.75)
                         .lineLimit(1)
                 }

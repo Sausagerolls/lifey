@@ -85,11 +85,11 @@ struct CommanderSection: View {
                     withAnimation(.snappy(duration: 0.18)) { direction = option }
                 } label: {
                     Text(option.title)
-                        .font(.tally(min(max(shortSide * 0.055, 10), 13), weight: .heavy))
+                        .font(.tally(min(max(shortSide * 0.055, 10), Theme.cap(shortSide, phone: 13, tablet: 22)), weight: .heavy))
                         .tracking(1)
                         .foregroundStyle(direction == option ? .black : Theme.textSecondary)
                         .frame(maxWidth: .infinity)
-                        .padding(.vertical, min(max(shortSide * 0.022, 4), 7))
+                        .padding(.vertical, min(max(shortSide * 0.022, 4), Theme.cap(shortSide, phone: 7, tablet: 14)))
                         .background(
                             Capsule(style: .continuous)
                                 .fill(direction == option ? accent.color : Color.black.opacity(0.25))
@@ -98,7 +98,7 @@ struct CommanderSection: View {
                 .buttonStyle(.plain)
             }
         }
-        .frame(maxWidth: min(shortSide * 1.6, 240))
+        .frame(maxWidth: min(shortSide * 1.6, Theme.cap(shortSide, phone: 240, tablet: 420)))
     }
 
     private func grid(in size: CGSize) -> some View {
@@ -109,7 +109,7 @@ struct CommanderSection: View {
         let tileHeight = max(usableHeight / CGFloat(rowCount), 40)
         let tileWidth = max((size.width - spacing * CGFloat(columns - 1)) / CGFloat(columns), 60)
         // The buttons never grow past a quarter of the tile, so the number keeps its room.
-        let buttonSize = min(max(min(tileHeight * 0.46, tileWidth * 0.25), 22), 52)
+        let buttonSize = min(max(min(tileHeight * 0.46, tileWidth * 0.25), 22), Theme.cap(shortSide, phone: 52, tablet: 90))
 
         return grid(
             columns: columns,
@@ -173,12 +173,12 @@ struct CommanderSection: View {
                     .fill(otherAccent.color)
                     .frame(width: 8, height: 8)
                 Text(entry.other.name)
-                    .font(.tally(min(max(tileHeight * 0.16, 10), 14), weight: .semibold))
+                    .font(.tally(min(max(tileHeight * 0.16, 10), Theme.cap(shortSide, phone: 14, tablet: 24)), weight: .semibold))
                     .foregroundStyle(Theme.textSecondary)
                     .lineLimit(1)
                 if entry.showsCommanderMark {
                     Text(entry.commanderIndex == 0 ? "I" : "II")
-                        .font(.tally(min(max(shortSide * 0.05, 9), 12), weight: .heavy))
+                        .font(.tally(min(max(shortSide * 0.05, 9), Theme.cap(shortSide, phone: 12, tablet: 20)), weight: .heavy))
                         .foregroundStyle(markTint)
                 }
             }
@@ -191,7 +191,7 @@ struct CommanderSection: View {
                 }
 
                 Text("\(entry.value)")
-                    .font(.tally(min(max(min(tileHeight * 0.52, tileWidth * (direction == .dealt ? 0.3 : 0.5)), 20), 60), weight: .heavy))
+                    .font(.tally(min(max(min(tileHeight * 0.52, tileWidth * (direction == .dealt ? 0.3 : 0.5)), 20), Theme.cap(shortSide, phone: 60, tablet: 150)), weight: .heavy))
                     .foregroundStyle(lethal ? Theme.danger : Theme.textPrimary)
                     .monospacedDigit()
                     .minimumScaleFactor(0.5)
